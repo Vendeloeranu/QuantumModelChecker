@@ -59,7 +59,9 @@ int BackEnd::run(){
     }
 
     this->isBusy = true;
-    QString command = "java -jar "+this->jarFile +" "+ this->currentModel +" "+ this->currentFormule +" "+ this->currentFileType;
+    QString command = "java -jar "+this->jarFile +" check --model-input-files "+ this->currentModel +
+                                    " --property-input-files "+ this->currentFormule +" --model-input-type "+ this->currentFileType;
+    qDebug() << command;
     cmd->write((command).toLocal8Bit() + '\n');
     this->isBusy = false;
     return RUN_SUCCESS;

@@ -47,7 +47,7 @@ QuantumMain::QuantumMain(QWidget *parent) :
     //treeViewDir->hideColumn(3);
     //ui->Out->setTabText(0,"sfdhjjshjsfgj");
     ui->resultText->setText("sjhjshdjshfjshfjsfjshfjshfjshfjshjshjfsjhfjshfjshjshjshfjshjfsfjsfs\n\n\n\n\n\n\n\n\n\n\n");
-    backend = new BackEnd(tr("/home/xuechao/xuechao/work/Lab/量子项目/QMC/QuantumModelChecker/Quantum.jar"));
+    backend = new BackEnd(tr("/home/xuechao/xuechao/work/Lab/量子项目/QMC/QuantumModelChecker/epmc-qmc.jar"));
     connect(backend, SIGNAL(sendOut(char * )), this,SLOT(on_readoutput(char *)) );
 
 }
@@ -271,10 +271,10 @@ void QuantumMain::Run(){
  int fileType = this->projects.at(currentProject)->getModelType();
  if(fileType == PRISM_FILE)
  {
-     backend->setCurrentFileType("PRISM");
+     backend->setCurrentFileType("prism-qmc");
  }
  else if(fileType == JANI_FILE){
-     backend->setCurrentFileType("JANI");
+     backend->setCurrentFileType("jani-qmc");
  }
  backend->run();
  //qDebug()<<backend->getOutput()<<endl;

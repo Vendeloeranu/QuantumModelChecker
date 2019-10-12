@@ -96,7 +96,7 @@ QString Project::getModelFileSuffix()
 }
 QString Project::getFormuleFileSuffix()
 {
-    return ".fl";
+    return ".props";
 }
 
 QString Project::getModelFile()
