@@ -67,7 +67,6 @@ QuantumMain::~QuantumMain()
 bool QuantumMain::isLoaded(QFileInfo & file){
     for(int i=0;i<this->files->size();i++){
         File tmp = this->files->at(i);
-        qDebug()<<file.absoluteFilePath()<<tmp.getAbsFileName();
         if(file.absoluteFilePath().compare(tmp.getAbsFileName()) == 0) return true;
     }
     return false;
@@ -312,7 +311,6 @@ ui->filterLevel->setEnabled(true);
 void QuantumMain::on_readoutput(char * out)
 {
     QString str(out);
-    qDebug() << str;
     QList<QString> result = this->filter(str);
     //ui->outText->append(result);
     for(QString line : result){
@@ -331,7 +329,6 @@ void QuantumMain::on_readoutput(char * out)
 }
 QList<QString> QuantumMain::filter(QString out){
     QList<QString> lines = out.split("\n");
-    qDebug() << "lines:" << lines;
     QList<QString> result;
     QString line;
     int currentLevel = 0;
@@ -357,7 +354,6 @@ QList<QString> QuantumMain::filter(QString out){
     if(currentLevel >= this->filterLevel){
         result.append(lines.at(lines.size()-1));
     }
-    qDebug()<<"result: "<<result;
     return result;
 }
 
@@ -450,7 +446,6 @@ int QuantumMain::createFile(QString filePath,QString fileName)
     tempFile->close();
     //将程序当前路径设置为原来的路径
     tempDir.setCurrent(currentDir);
-    qDebug()<<tempDir.currentPath();
     return CREATE_FILE_SUCCESS;
 }
 void QuantumMain::closeProject(){
@@ -498,7 +493,6 @@ QString QuantumMain::save()
 
 QString QuantumMain::saveFile(const QString &fileName)
 {
-    qDebug()<<fileName;
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Application"),
@@ -813,7 +807,6 @@ void QuantumMain::treeViewDoubleClick(const QModelIndex & index)
     //curtextEdit->setText(dirModel->filePath(index));
     //loadFile(dirModel->filePath(index));
     QString file = projectModel->get(index);
-    qDebug()<<file;
     if(file.compare("") == 0){
         return;
     }

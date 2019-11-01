@@ -1707,29 +1707,6 @@ choosepath.o: choosepath.cpp choosepath.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qvector2d.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_choosepath.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/QVariant \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QApplication \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qapplication.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/qcoreapplication.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/qeventloop.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qguiapplication.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qinputmethod.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QDialogButtonBox \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QLabel \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qlabel.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qframe.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QLineEdit \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qlineedit.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qtextcursor.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qtextformat.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qpen.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qtextoption.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QPushButton \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qicon.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/QString \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/QDir \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/qdir.h \
@@ -2475,53 +2452,6 @@ quantummain.o: quantummain.cpp quantummain.h \
 		projectitem.h \
 		file.h \
 		ui_quantummain.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/QIcon \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QApplication \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qapplication.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/qcoreapplication.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/qeventloop.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qguiapplication.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qinputmethod.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QComboBox \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qcombobox.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qstyleoption.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtGui/qvalidator.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qslider.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qabstractslider.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qstyle.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qtabbar.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qrubberband.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QGridLayout \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qgridlayout.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qlayout.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qboxlayout.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QHBoxLayout \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QHeaderView \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qheaderview.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/qitemselectionmodel.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QLabel \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qlabel.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QMenuBar \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qmenubar.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qmenu.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qaction.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qactiongroup.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QSplitter \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qsplitter.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QStatusBar \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qstatusbar.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QTabWidget \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QToolBar \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qtoolbar.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QTreeView \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qtreeview.h \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QVBoxLayout \
-		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QWidget \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QFileSystemModel \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qfilesystemmodel.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/qdir.h \
@@ -2531,6 +2461,10 @@ quantummain.o: quantummain.cpp quantummain.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qfileiconprovider.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtCore/QDir \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QDesktopWidget \
+		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QTabWidget \
+		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QLabel \
+		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qlabel.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/QFileDialog \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/xuechao/application/Qt/5.13.1/gcc_64/include/QtWidgets/qdialog.h \

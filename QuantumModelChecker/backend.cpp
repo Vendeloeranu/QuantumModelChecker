@@ -68,7 +68,7 @@ int BackEnd::run(){
 
     QString command = "java -jar "+this->jarFile +" check --model-input-files "+ this->currentModel +
                                     " --property-input-files "+ this->currentFormule +" --model-input-type "+ this->currentFileType;
-    qDebug() << command;
+
     cmd->write((command).toLocal8Bit() + '\n');
 
     //cmd->execute(command);
