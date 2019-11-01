@@ -35,7 +35,8 @@ private:
     QTextCharFormat compareFormat;
     QTextCharFormat assertFormat;
     QTextCharFormat otherFormat;
-    //QTextCharFormat singleLineCommentFormat;
+    QTextCharFormat singleLineCommentFormat;
+    QTextCharFormat quotationFormat;
     QTextCharFormat multiLineCommentFormat;
 };
 

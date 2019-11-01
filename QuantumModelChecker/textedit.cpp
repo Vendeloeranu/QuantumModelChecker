@@ -57,10 +57,12 @@
 #include <QModelIndex>
 #include <QAbstractItemModel>
 #include <QScrollBar>
+#include <QMessageBox>
+#include <QDir>
 
 //! [0]
-TextEdit::TextEdit(QWidget *parent)
-: QTextEdit(parent), c(0)
+TextEdit::TextEdit(QString fileName,QWidget *parent)
+: QTextEdit(parent), fileName(fileName),c(0), parent(parent)
 {
     /*setPlainText(tr("This TextEdit provides autocompletions for words that have more than"
                     " 3 characters. You can trigger autocompletion using ") +
@@ -184,3 +186,29 @@ void TextEdit::keyPressEvent(QKeyEvent *e)
 }
 //! [8]
 
+void TextEdit::save()
+{
+    qDebug()<<fileName;
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("Application"),
+                             tr("Cannot write file %1:\n%2.")
+                             .arg(QDir::toNativeSeparators(fileName),
+                                  file.errorString()));
+        return ;
+    }
+
+    QTextStream out(&file);
+#ifndef QT_NO_CURSOR
+    QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+    out << this->toPlainText();
+#ifndef QT_NO_CURSOR
+    QGuiApplication::restoreOverrideCursor();
+#endif
+    out.flush();
+
+    file.close();
+    //this->parent->close();
+    return ;
+}

@@ -22,7 +22,7 @@ void choosePath::on_choose_clicked()
 {
     QDir dir;
     QString PathName = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-                                                 "E:/Myworkspace/data/",
+                                                 QDir::home().path(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
 

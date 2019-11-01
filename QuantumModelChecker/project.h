@@ -13,8 +13,9 @@
 
 #define ELEMENT_NUMBER 2
 
-class Project
+class Project: public QObject
 {
+    Q_OBJECT
 private:
     QString path;
     QString modelFile;
@@ -30,8 +31,9 @@ private:
     int unserilize(const QString & project);
 
 signals:
-    void closeModelFile();
-    void closeFormuleFile();
+    void closeFile();
+    void saveProject();
+
 public:
     Project(const QString & path, const QString & name);
     void setModelFile(const QString & modelFileName);

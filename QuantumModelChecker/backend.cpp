@@ -7,9 +7,12 @@ BackEnd::BackEnd(const QString jarFileName)
     cmd = new QProcess(this);
     connect(cmd , SIGNAL(readyReadStandardOutput()) , this , SLOT(on_readoutput()));
     connect(cmd , SIGNAL(readyReadStandardError()) , this ,SLOT(on_readerror()));
-
+    //cmd->setWorkingDirectory("~");
     cmd->start("bash");
+
     cmd->waitForStarted();
+
+
 }
 BackEnd::~BackEnd(){
     if(cmd){
@@ -41,15 +44,18 @@ QString BackEnd::getOutput(){
 }
 void BackEnd::on_readoutput()
 {
+   // QString result =QString(cmd->readAllStandardOutput().data());
     emit sendOut(cmd->readAllStandardOutput().data());
     //out.append(cmd->readAllStandardOutput().data());
-    //qDebug(cmd->readAllStandardOutput().data());
+    //qDebug() << result;
     //this->isBusy = false;
 }
 
 void BackEnd::on_readerror()
 {
+    //QString result = QString(cmd->readAllStandardError().data());
     emit sendOut(cmd->readAllStandardError().data());
+    //qDebug() << result;
     //out.append(cmd->readAllStandardError().data());
     //this->isBusy = false;
 }
@@ -59,10 +65,13 @@ int BackEnd::run(){
     }
 
     this->isBusy = true;
+
     QString command = "java -jar "+this->jarFile +" check --model-input-files "+ this->currentModel +
                                     " --property-input-files "+ this->currentFormule +" --model-input-type "+ this->currentFileType;
     qDebug() << command;
     cmd->write((command).toLocal8Bit() + '\n');
+
+    //cmd->execute(command);
     this->isBusy = false;
     return RUN_SUCCESS;
 }

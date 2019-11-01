@@ -63,7 +63,7 @@ class TextEdit : public QTextEdit
     Q_OBJECT
 
 public:
-    TextEdit(QWidget *parent = 0);
+    TextEdit(QString fileName,QWidget *parent = 0);
     ~TextEdit();
 
     void setCompleter(QCompleter *c);
@@ -73,14 +73,19 @@ protected:
     void keyPressEvent(QKeyEvent *e) override;
     void focusInEvent(QFocusEvent *e) override;
 
+public slots:
+    void save();
+
 private slots:
     void insertCompletion(const QString &completion);
 
 private:
     QString textUnderCursor() const;
+    QString fileName;
 
 private:
     QCompleter *c;
+    QWidget *parent;
 };
 //! [0]
 

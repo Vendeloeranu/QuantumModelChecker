@@ -22,7 +22,7 @@ void ProjectModel::addProject(Project * project)
 
     this->beginInsertRows(this->index(this->currentProject,0),0,1);
     node->appendChild(new TreeNode(new ProjectItem({"Model"}),MIDDLE_NODE,node));
-    node->appendChild(new TreeNode(new ProjectItem({"Formule"}),MIDDLE_NODE,node));
+    node->appendChild(new TreeNode(new ProjectItem({"Property"}),MIDDLE_NODE,node));
     this->endInsertRows();
 
     this->projects.append(project);
@@ -84,6 +84,7 @@ QString ProjectModel::get(const QModelIndex &index) const
         QDir dir(path);
         return dir.absoluteFilePath(name);
     }
+
     return "";
 
 }

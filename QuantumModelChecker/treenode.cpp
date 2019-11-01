@@ -11,6 +11,7 @@ TreeNode::TreeNode(const Project *data,int type, TreeNode *parent)
     }
     m_itemData = item;
     this->type = type;
+
 }
 TreeNode::TreeNode(ProjectItem *data,int type, TreeNode *parent)
     :m_itemData(data), m_parentItem(parent)

@@ -70,8 +70,9 @@ private:
     Ui::QuantumMain *ui;
     BackEnd * backend;
     QAbstractItemModel *modelFromFile(const QString& fileName,QCompleter *completer);
+    void initUI();
 
-    bool newFile(QFileInfo info);
+    bool newFile(QFileInfo info, Project * p);
     int createFile(QString filePath,QString fileName);
     void createActions();
     void createStatusBar();
@@ -84,7 +85,7 @@ private:
     void setCurrentFile(const QString &fileName);
     void textEditReconnect();
     QString strippedName(const QString &fullFileName);
-    QString filter(QString out);
+    QList<QString> filter(QString out);
 
     Highlighter *highlighter;
     QDirModel *dirModel=nullptr;
@@ -97,6 +98,8 @@ private:
     int currentProject = -1;
     QList<Project*> projects;
     ProjectModel * projectModel;
+
+    bool isFinalResult = false;
 
     /**************************ui****************************************/
 

@@ -1,5 +1,7 @@
 #include "project.h"
 #include <QDir>
+#include <QDebug>
+
 Project::Project(const QString & path, const QString & name)
 {
     this->path = path;
@@ -32,6 +34,7 @@ void Project::save()
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     file.write(project.toUtf8());
     file.close();
+    emit saveProject();
 }
 
 void Project::open(QString projectFile)
@@ -63,8 +66,10 @@ int Project::unserilize(const QString & project)
 {
     QStringList list = project.split(";");
     if(list.size()<3) return UNSERILIZE_FAILED;
-    this->setModelFile(list[0]);
-    this->setFormuleFile(list[1]);
+    if(list[0].compare("") != 0)
+        this->setModelFile(list[0]);
+    if(list[1].compare("") != 0)
+        this->setFormuleFile(list[1]);
     bool * ok = new bool;
     int type = list[2].toInt(ok);
     if(! *ok) return UNSERILIZE_FAILED;

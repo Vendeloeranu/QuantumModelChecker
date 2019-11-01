@@ -14,7 +14,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>QuantumMain</string>
+   <string>QuantumModelChecker</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>resources/icon.png</normaloff>resources/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="enabled">
@@ -27,102 +31,185 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,7">
-      <item>
-       <widget class="QTreeView" name="DirTree"/>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="16,1,6">
-        <item>
-         <widget class="QTabWidget" name="File"/>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3,1">
-          <item alignment="Qt::AlignRight">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Filter Level:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="filterLevel">
-            <item>
-             <property name="text">
-              <string>Info</string>
-             </property>
+    <item row="1" column="0">
+     <widget class="QSplitter" name="splitter_H">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
+      <widget class="QTreeView" name="DirTree">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QSplitter" name="splitter_V">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="handleWidth">
+        <number>1</number>
+       </property>
+       <property name="childrenCollapsible">
+        <bool>false</bool>
+       </property>
+       <widget class="QTabWidget" name="File">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>600</width>
+          <height>400</height>
+         </size>
+        </property>
+        <property name="currentIndex">
+         <number>-1</number>
+        </property>
+       </widget>
+       <widget class="QWidget" name="V_out" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,6">
+         <item>
+          <widget class="QWidget" name="Filter" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,1">
+            <item alignment="Qt::AlignRight">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Filter Level:</string>
+              </property>
+             </widget>
             </item>
             <item>
-             <property name="text">
-              <string>Worning</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Error</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QTabWidget" name="Out">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="OutPut">
-           <attribute name="title">
-            <string>Ouput</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <widget class="QTextEdit" name="outText">
+             <widget class="QComboBox" name="filterLevel">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
+              <item>
+               <property name="text">
+                <string>Info</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Worning</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Error</string>
+               </property>
+              </item>
              </widget>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="Rsult">
-           <attribute name="title">
-            <string>Result</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <widget class="QTextEdit" name="resultText">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
+         </item>
+         <item>
+          <widget class="QTabWidget" name="Out">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <widget class="QWidget" name="OutPut">
+            <attribute name="title">
+             <string>Output</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QTextEdit" name="outText">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="Result">
+            <attribute name="title">
+             <string>Result</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <widget class="QTextEdit" name="resultText">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>

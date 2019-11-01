@@ -24,13 +24,13 @@ QuantumMain::QuantumMain(QWidget *parent) :
     ui(new Ui::QuantumMain)
 {
     ui->setupUi(this);
+    this->initUI();
     //curtextEdit=ui->defaulttextEdit;
 
     connect(ui->File,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
     connect(ui->File,SIGNAL(currentChanged(int)),this,SLOT(changeSubTab(int)));
     connect(ui->DirTree,SIGNAL(doubleClicked(const QModelIndex)),this,SLOT(treeViewDoubleClick(const QModelIndex)));
     ui->File->setTabsClosable(true);
-    //newFile();
     createActions();
 
 
@@ -44,12 +44,20 @@ QuantumMain::QuantumMain(QWidget *parent) :
     treeViewDir->showColumn(0);
     treeViewDir->hideColumn(1);
     //treeViewDir->hideColumn(2);
-    //treeViewDir->hideColumn(3);
-    //ui->Out->setTabText(0,"sfdhjjshjsfgj");
-    ui->resultText->setText("sjhjshdjshfjshfjsfjshfjshfjshfjshjshjfsjhfjshfjshjshjshfjshjfsfjsfs\n\n\n\n\n\n\n\n\n\n\n");
-    backend = new BackEnd(tr("/home/xuechao/xuechao/work/Lab/量子项目/QMC/QuantumModelChecker/epmc-qmc.jar"));
+    backend = new BackEnd(tr("/home/xuechao/xuechao/work/Lab/QuantumProject/QMC/QuantumModelChecker/epmc-qmc.jar"));
     connect(backend, SIGNAL(sendOut(char * )), this,SLOT(on_readoutput(char *)) );
 
+}
+void QuantumMain::initUI()
+{
+    setWindowIcon(QIcon(":/new/pic/resources/icon.png"));
+    this->setWindowState(Qt::WindowMaximized);
+    QSplitter* splitterH = ui->splitter_H;
+    QSplitter * splitterV = ui->splitter_V;
+    splitterH->setStretchFactor(0,1);
+    splitterH->setStretchFactor(1,4);
+    splitterV->setStretchFactor(splitterV->indexOf(ui->File),1000);
+    splitterV->setStretchFactor(splitterV->indexOf(ui->V_out),1);
 }
 
 QuantumMain::~QuantumMain()
@@ -74,7 +82,7 @@ void QuantumMain::loadFile(const QString &fileName)
     QFileInfo fileInfo(file);
     if(fileInfo.isDir()) return;
 
-    if(!newFile(fileInfo)) return;
+    if(!newFile(fileInfo, this->projects.at(this->currentProject))) return;
 //    QLabel *storePath;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Application"),
@@ -99,7 +107,6 @@ void QuantumMain::loadFile(const QString &fileName)
 }
 
 void QuantumMain::createActions()
-//! [17] //! [18]
 {
 
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
@@ -107,17 +114,24 @@ void QuantumMain::createActions()
     const QIcon newIcon = QIcon::fromTheme("document-new", QApplication::style()->standardIcon((enum QStyle::StandardPixmap)25));
     QMenu * newMenu = fileMenu->addMenu(tr("&New"));
     newMenu->setIcon(newIcon);
-    QAction *newModelAct = new QAction(newIcon, tr("&Model"), this);
-    newModelAct->setShortcuts(QKeySequence::New);
-    newModelAct->setStatusTip(tr("Create a new file"));
+    const QIcon * newModelIcon = new QIcon(":/new/pic/resources/newmodel.png");
+    QAction *newModelAct = new QAction(*newModelIcon, tr("&New Model"), this);
+    //newModelAct->setShortcuts(QKeySequence::New);
+    newModelAct->setStatusTip(tr("Create a model file"));
     connect(newModelAct, &QAction::triggered, this, &QuantumMain::newModelFile);
-    QAction *newFormulelAct = new QAction(newIcon, tr("&Formule"), this);
+
+    const QIcon * newFormuleIcon = new QIcon(":/new/pic/resources/newformule.png");
+    QAction *newFormulelAct = new QAction(*newFormuleIcon, tr("& New Property"), this);
     //newFormulelAct->setShortcuts(QKeySequence::New);
-    newFormulelAct->setStatusTip(tr("Create a new file"));
+    newFormulelAct->setStatusTip(tr("Create a property file"));
     connect(newFormulelAct, &QAction::triggered, this, &QuantumMain::newFormuleFile);
     newMenu->addAction(newModelAct);
     newMenu->addAction(newFormulelAct);
    // fileToolBar->addAction(newAct);
+
+    fileToolBar->addAction(newModelAct);
+    fileToolBar->addAction(newFormulelAct);
+
 
 //! [19]
     const QIcon openIcon = QIcon::fromTheme("document-open", QApplication::style()->standardIcon((enum QStyle::StandardPixmap)42));
@@ -128,18 +142,22 @@ void QuantumMain::createActions()
 
     QMenu * openMenu = fileMenu->addMenu(tr("&Open"));
     openMenu->setIcon(openIcon);
-    QAction *openModelAct = new QAction(openIcon, tr("&Model"), this);
+    const QIcon * openModelIcon = new QIcon(":/new/pic/resources/openmodel.png");
+    QAction *openModelAct = new QAction(* openModelIcon, tr("&Open Model"), this);
     openModelAct->setShortcuts(QKeySequence::New);
     openModelAct->setStatusTip(tr("Open a new  model file"));
     connect(openModelAct, &QAction::triggered, this, &QuantumMain::openModelFile);
-    QAction *openFormulelAct = new QAction(openIcon, tr("&Formule"), this);
+    const QIcon * openFormuleIcon = new QIcon(":/new/pic/resources/openformule.png");
+    QAction *openFormuleAct = new QAction(*openFormuleIcon, tr("&Open Property"), this);
     //newFormulelAct->setShortcuts(QKeySequence::New);
-    openFormulelAct->setStatusTip(tr("Create a new  formule file"));
-    connect(openFormulelAct, &QAction::triggered, this, &QuantumMain::openFormuleFile);
+    openFormuleAct->setStatusTip(tr("Create a new  property file"));
+    connect(openFormuleAct, &QAction::triggered, this, &QuantumMain::openFormuleFile);
     openMenu->addAction(openModelAct);
-    openMenu->addAction(openFormulelAct);
+    openMenu->addAction(openFormuleAct);
     //fileMenu->addAction(openAct);
-    //fileToolBar->addAction(openAct);
+
+    fileToolBar->addAction(openModelAct);
+    fileToolBar->addAction(openFormuleAct);
 //! [18] //! [19]
 
     const QIcon saveIcon = QIcon::fromTheme("document-save", QApplication::style()->standardIcon((enum QStyle::StandardPixmap)43));
@@ -222,34 +240,40 @@ void QuantumMain::createActions()
    // fileToolBar->addAction(newAct);
 
     QMenu *runMenu = menuBar()->addMenu(tr("&Run"));
-    runAction= new QAction(tr("&Run"),this);
+    QToolBar *runToolBar = addToolBar(tr("Run"));
+    const QIcon * run = new QIcon(":/new/pic/resources/run.png");
+    runAction= new QAction(*run, tr("&Run"),this);
     //QAction * = new QAction(tr("&JSNI"),this);
     runMenu->addAction(runAction);
     connect(runAction, &QAction::triggered, this, &QuantumMain::Run);
-    fileToolBar->addAction(runAction);
+    runToolBar->addAction(runAction);
 
     QMenu *projectMenu = menuBar()->addMenu(tr("&Project"));
-    QAction * newAction= new QAction(tr("&New..."),this);
+    QToolBar *projectToolBar = addToolBar(tr("Project"));
+    QAction * newAction= new QAction(tr("&New Project..."),this);
     projectMenu->addAction(newAction);
     connect(newAction, &QAction::triggered, this, &QuantumMain::newProject);
+   // projectToolBar->addAction(newAction);
 
-    QAction * openAction= new QAction(tr("&Open..."),this);
+    QAction * openAction= new QAction(tr("&Open Project..."),this);
     projectMenu->addAction(openAction);
     connect(openAction, &QAction::triggered, this, &QuantumMain::openProject);
+    //projectToolBar->addAction(openAction);
 
-    QAction * closeAction= new QAction(tr("&Close..."),this);
+    QAction * closeAction= new QAction(tr("&Close Project"),this);
     projectMenu->addAction(closeAction);
     connect(closeAction, &QAction::triggered, this, &QuantumMain::closeProject);
+    //projectToolBar->addAction(closeAction);
 
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
-    QAction *aboutAct = helpMenu->addAction(tr("&About"), this, &QuantumMain::about);
-    aboutAct->setStatusTip(tr("Show the application's About box"));
+    //QAction *aboutAct = helpMenu->addAction(tr("&About"), this, &QuantumMain::about);
+    //aboutAct->setStatusTip(tr("Show the application's About box"));
 
 //! [22]
 
-    QAction *aboutQtAct = helpMenu->addAction(tr("About &Qt"), qApp, &QApplication::aboutQt);
-    aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
+    //QAction *aboutQtAct = helpMenu->addAction(tr("About &QuantumModelChecker"), qApp, &QApplication::aboutQt);
+    //aboutQtAct->setStatusTip(tr("Show the QuantumModelChecker About box"));
 //! [22]
 
 //! [23]
@@ -276,6 +300,9 @@ void QuantumMain::Run(){
  else if(fileType == JANI_FILE){
      backend->setCurrentFileType("jani-qmc");
  }
+ ui->outText->setText("");
+ ui->resultText->setText("");
+ this->isFinalResult = false;
  backend->run();
  //qDebug()<<backend->getOutput()<<endl;
  //ui->outText->setText(backend->getOutput());
@@ -285,15 +312,33 @@ ui->filterLevel->setEnabled(true);
 void QuantumMain::on_readoutput(char * out)
 {
     QString str(out);
-    QString result = this->filter(str);
-    ui->outText->append(result);
+    qDebug() << str;
+    QList<QString> result = this->filter(str);
+    //ui->outText->append(result);
+    for(QString line : result){
+        if(line.indexOf("=====================================================") != -1){
+            this->isFinalResult = true;
+        }
+        if(this->isFinalResult){
+            ui->resultText->insertPlainText(line);
+            ui->resultText->moveCursor(QTextCursor::End);
+        }
+        else{
+            ui->outText->insertPlainText(line);
+            ui->outText->moveCursor(QTextCursor::End);
+        }
+    }
 }
-QString QuantumMain::filter(QString out){
+QList<QString> QuantumMain::filter(QString out){
     QList<QString> lines = out.split("\n");
-    QString result="";
+    qDebug() << "lines:" << lines;
+    QList<QString> result;
     QString line;
     int currentLevel = 0;
-    foreach (line, lines) {
+    for(int i=0;i<lines.size()-1;i++){
+    //foreach (line, lines) {
+        line = lines.at(i);
+        line = line.trimmed();
         if(line.startsWith("[Info]")){
             currentLevel = 0;
         }
@@ -306,9 +351,13 @@ QString QuantumMain::filter(QString out){
             currentLevel = 2;
         }
         if(currentLevel >= this->filterLevel){
-            result += line+"\n";
+            result.append(line+"\n");
         }
     }
+    if(currentLevel >= this->filterLevel){
+        result.append(lines.at(lines.size()-1));
+    }
+    qDebug()<<"result: "<<result;
     return result;
 }
 
@@ -317,8 +366,10 @@ int QuantumMain::openProject()
     QFileDialog dialog(this);
     dialog.setWindowModality(Qt::WindowModal);
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
-    //dialog.setDirectory(this->projects.at(this->currentProject)->getPath());
-    dialog.setDefaultSuffix(".pro");
+    dialog.setDirectory(QDir::home());
+    QStringList nameFilters;
+    nameFilters << "Project Files(*.pro)";
+    dialog.setNameFilters(nameFilters);
     if (dialog.exec() != QDialog::Accepted)
         return -1;
     QString file =  dialog.selectedFiles().first();
@@ -407,13 +458,16 @@ void QuantumMain::closeProject(){
     Project * pro = projects.at(this->currentProject);
     pro->save();
     projectModel->closeProject(this->currentProject);
-    this->saveFile(pro->getModelFile());
-    this->saveFile(pro->getFormuleFile());
+    if(pro->isValidModelFile()){
+
+        //this->saveFile(pro->getModelFile());
+    }
+    if(pro->isValidFormuleFile()){
+       // this->saveFile(pro->getFormuleFile());
+    }
 
     projects.removeAt(this->currentProject);
     this-> currentProject = projects.size()-1;
-    //if(this->currentProject == -1) return;
-    //ui->DirTree->setRootIndex(dirModel->index(projects.at(currentProject)->getPath()));
 }
 void QuantumMain::about()
 {
@@ -492,7 +546,8 @@ void QuantumMain::open()
 }
 void QuantumMain::newModelFile(){
     if(this->currentProject == -1){
-        this->newProject();
+        int code = this->newProject();
+        if(code == CREATE_FILE_FAILED) return;
     }
     Project * p = this->projects.at(currentProject);
     QString dlgTitle="New Model File";
@@ -510,7 +565,6 @@ void QuantumMain::newModelFile(){
         return ;
     }
 
-
     QString projectPath = this->projects.at(this->currentProject)->getPath();
 
     QDir dir(projectPath);
@@ -523,13 +577,13 @@ void QuantumMain::newModelFile(){
 
     QString modelFile = dir.absoluteFilePath(fileName);
     QFileInfo info(modelFile);
-    if(!this->newFile(info)) return;
+    if(!this->newFile(info, p)) return;
     p->setModelFile(modelFile);
     this->projectModel->addModel(new ProjectItem({info.fileName(),info.path()}));
 }
 void QuantumMain::openFormuleFile(){
     if(this->currentProject == -1){
-        QMessageBox::warning(this, "Worning", "No Project!\n");
+        QMessageBox::warning(this, "Worning", "No Project!\nPlease create a project.");
         return;
     }
     Project * p = this->projects.at(currentProject);
@@ -538,7 +592,9 @@ void QuantumMain::openFormuleFile(){
     dialog.setWindowModality(Qt::WindowModal);
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setDirectory(p->getPath());
-    dialog.setDefaultSuffix(".pro");
+    QStringList nameFilters;
+    nameFilters << "Project Files(*"+p->getFormuleFileSuffix()+")";
+    dialog.setNameFilters(nameFilters);
     if (dialog.exec() != QDialog::Accepted)
         return ;
     QString file =  dialog.selectedFiles().first();
@@ -551,13 +607,17 @@ void QuantumMain::openFormuleFile(){
     }
 
     QFileInfo info(file);
+    if(info.absolutePath().compare(p->getPath()) != 0){
+        return;
+    }
+
     p->setFormuleFile(file);
     this->projectModel->addFormule(new ProjectItem({info.fileName(),info.path()}));
 }
 
 void QuantumMain::openModelFile(){
     if(this->currentProject == -1){
-        QMessageBox::warning(this, "Worning", "No Project!\n");
+        QMessageBox::warning(this, "Worning", "No Project!\nPlease create a project.");
         return;
     }
     Project * p = this->projects.at(currentProject);
@@ -566,7 +626,9 @@ void QuantumMain::openModelFile(){
     dialog.setWindowModality(Qt::WindowModal);
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setDirectory(p->getPath());
-    dialog.setDefaultSuffix(".pro");
+    QStringList nameFilters;
+    nameFilters << "Project Files(*"+p->getModelFileSuffix()+")";
+    dialog.setNameFilters(nameFilters);
     if (dialog.exec() != QDialog::Accepted)
         return ;
     QString file =  dialog.selectedFiles().first();
@@ -579,12 +641,18 @@ void QuantumMain::openModelFile(){
     }
 
     QFileInfo info(file);
+
+    if(info.absolutePath().compare(p->getPath()) != 0){
+        return;
+    }
+
     p->setModelFile(file);
     this->projectModel->addModel(new ProjectItem({info.fileName(),info.path()}));
 }
 void QuantumMain::newFormuleFile(){
     if(this->currentProject == -1){
-        this->newProject();
+        int code = this->newProject();
+        if(code == CREATE_FILE_FAILED) return;
     }
     Project * p = this->projects.at(currentProject);
     QString dlgTitle="New Formule File";
@@ -614,12 +682,12 @@ void QuantumMain::newFormuleFile(){
 
     QString formuleFile = dir.absoluteFilePath(fileName);
     QFileInfo info(formuleFile);
-    if(!this->newFile(formuleFile)) return;
+    if(!this->newFile(formuleFile, p)) return;
     this->projects.at(currentProject)->setFormuleFile(formuleFile);
     this->projectModel->addFormule(new ProjectItem({info.fileName(),info.path()}));
 }
 
-bool QuantumMain::newFile(QFileInfo info)
+bool QuantumMain::newFile(QFileInfo info, Project * p)
 {
     if(this->isLoaded(info))
     {
@@ -634,7 +702,7 @@ bool QuantumMain::newFile(QFileInfo info)
 
     QWidget *qnewTab=new QWidget(ui->File);
     QVBoxLayout *layout=new QVBoxLayout(qnewTab);
-    TextEdit *newTextEdit=new TextEdit(qnewTab);
+    TextEdit *newTextEdit=new TextEdit(info.absoluteFilePath(),qnewTab);
     QCompleter *completer=new QCompleter(qnewTab);
     newTextEdit->setFont(font);
     QLabel *newLabel=new QLabel(qnewTab);
@@ -642,6 +710,7 @@ bool QuantumMain::newFile(QFileInfo info)
     newTextEdit->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     completer->setModel(modelFromFile(":/resources/wordlist.txt",completer));
+
     completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     completer->setWrapAround(false);
@@ -655,7 +724,7 @@ bool QuantumMain::newFile(QFileInfo info)
     setCurrentFile(info.absoluteFilePath());
     connect(newTextEdit->document(), &QTextDocument::contentsChanged,
             this, &QuantumMain::documentWasModified);
-
+    connect(p, &Project::saveProject, newTextEdit, &TextEdit::save);
     return true;
 }
 
