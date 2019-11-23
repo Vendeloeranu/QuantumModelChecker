@@ -79,7 +79,7 @@ private:
     void readSettings();
     void writeSettings();
     bool maybeSave();
-    bool isLoaded(QFileInfo & file);
+    int isLoaded(QFileInfo & file);
     void addLoadedFile(QFileInfo  file);
     QString saveFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);

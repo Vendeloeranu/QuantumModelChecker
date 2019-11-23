@@ -77,7 +77,6 @@ TextEdit::~TextEdit()
 {
 }
 //! [1]
-
 //! [2]
 void TextEdit::setCompleter(QCompleter *completer)
 {

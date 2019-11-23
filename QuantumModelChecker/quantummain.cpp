@@ -44,7 +44,10 @@ QuantumMain::QuantumMain(QWidget *parent) :
     treeViewDir->showColumn(0);
     treeViewDir->hideColumn(1);
     //treeViewDir->hideColumn(2);
-    backend = new BackEnd(tr("/home/xuechao/xuechao/work/Lab/QuantumProject/QMC/QuantumModelChecker/epmc-qmc.jar"));
+    QFileInfo info("./epmc-qmc.jar");
+    qDebug() << info.absoluteFilePath();
+   //QFile::copy(info.absoluteFilePath(),"/home/xuechao/xuechao/work/Lab/QuantumProject/epmc.jar");
+    backend = new BackEnd(info.absoluteFilePath());
     connect(backend, SIGNAL(sendOut(char * )), this,SLOT(on_readoutput(char *)) );
 
 }
@@ -64,12 +67,12 @@ QuantumMain::~QuantumMain()
 {
     delete ui;
 }
-bool QuantumMain::isLoaded(QFileInfo & file){
+int QuantumMain::isLoaded(QFileInfo & file){
     for(int i=0;i<this->files->size();i++){
         File tmp = this->files->at(i);
-        if(file.absoluteFilePath().compare(tmp.getAbsFileName()) == 0) return true;
+        if(file.absoluteFilePath().compare(tmp.getAbsFileName()) == 0) return i;
     }
-    return false;
+    return -1;
 }
 void QuantumMain::addLoadedFile(QFileInfo file){
     this->files->append(file);
@@ -359,6 +362,7 @@ QList<QString> QuantumMain::filter(QString out){
 
 int QuantumMain::openProject()
 {
+
     QFileDialog dialog(this);
     dialog.setWindowModality(Qt::WindowModal);
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
@@ -368,6 +372,9 @@ int QuantumMain::openProject()
     dialog.setNameFilters(nameFilters);
     if (dialog.exec() != QDialog::Accepted)
         return -1;
+    if(this->projects.size()>0){
+        this->closeProject();
+    }
     QString file =  dialog.selectedFiles().first();
     QFileInfo info(file);
     Project * p = new Project(info.path(),info.baseName());
@@ -397,6 +404,9 @@ int QuantumMain::newProject(){
     if(! ok) return CREATE_FILE_FAILED;
     choosePath * path = new choosePath();
     if(path->exec() ==  QDialog::Accepted){
+        if(this->projects.size()>0){
+            this->closeProject();
+        }
         QString projectPath = path->getValue();
 
         QDir dir(projectPath);
@@ -454,7 +464,6 @@ void QuantumMain::closeProject(){
     pro->save();
     projectModel->closeProject(this->currentProject);
     if(pro->isValidModelFile()){
-
         //this->saveFile(pro->getModelFile());
     }
     if(pro->isValidFormuleFile()){
@@ -463,6 +472,11 @@ void QuantumMain::closeProject(){
 
     projects.removeAt(this->currentProject);
     this-> currentProject = projects.size()-1;
+
+    this->ui->File->clear();
+    curtextEdit=nullptr;
+    curFile="";
+    this->files->clear();
 }
 void QuantumMain::about()
 {
@@ -602,7 +616,15 @@ void QuantumMain::openFormuleFile(){
 
     QFileInfo info(file);
     if(info.absolutePath().compare(p->getPath()) != 0){
+        QDir dir(p->getPath());
+        QString destFile = dir.absoluteFilePath(info.fileName());
+        QFile::copy(info.absoluteFilePath(), destFile);
+        QFileInfo destInfo(destFile);
+
+        p->setFormuleFile(destFile);
+        this->projectModel->addFormule(new ProjectItem({destInfo.fileName(),destInfo.path()}));
         return;
+
     }
 
     p->setFormuleFile(file);
@@ -637,6 +659,14 @@ void QuantumMain::openModelFile(){
     QFileInfo info(file);
 
     if(info.absolutePath().compare(p->getPath()) != 0){
+        QDir dir(p->getPath());
+        QString destFile = dir.absoluteFilePath(info.fileName());
+        qDebug() << info.absoluteFilePath() << destFile;
+        QFile::copy(info.absoluteFilePath(), destFile);
+        QFileInfo destInfo(destFile);
+
+        p->setModelFile(destFile);
+        this->projectModel->addModel(new ProjectItem({destInfo.fileName(),destInfo.path()}));
         return;
     }
 
@@ -683,8 +713,11 @@ void QuantumMain::newFormuleFile(){
 
 bool QuantumMain::newFile(QFileInfo info, Project * p)
 {
-    if(this->isLoaded(info))
+    int index = this->isLoaded(info);
+    if(index != -1)
     {
+        ui->File->setCurrentIndex(index);
+        setCurrentFile(info.absoluteFilePath());
         return false;
     }
     this->addLoadedFile(info);
@@ -782,6 +815,8 @@ void QuantumMain::closeEvent(QCloseEvent *event)
 
 void QuantumMain::removeSubTab(int index)
 {
+    curtextEdit = nullptr;
+    curFile = "";
     ui->File->removeTab(index);
 }
 
