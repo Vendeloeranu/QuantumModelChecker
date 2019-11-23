@@ -44,10 +44,10 @@ QuantumMain::QuantumMain(QWidget *parent) :
     treeViewDir->showColumn(0);
     treeViewDir->hideColumn(1);
     //treeViewDir->hideColumn(2);
-    QFileInfo info("./epmc-qmc.jar");
-    qDebug() << info.absoluteFilePath();
+    QDir dir(qApp->applicationDirPath());
+    dir.cd("lib");
    //QFile::copy(info.absoluteFilePath(),"/home/xuechao/xuechao/work/Lab/QuantumProject/epmc.jar");
-    backend = new BackEnd(info.absoluteFilePath());
+    backend = new BackEnd(dir.absoluteFilePath("epmc-qmc.jar"));
     connect(backend, SIGNAL(sendOut(char * )), this,SLOT(on_readoutput(char *)) );
 
 }
@@ -321,10 +321,12 @@ void QuantumMain::on_readoutput(char * out)
             this->isFinalResult = true;
         }
         if(this->isFinalResult){
+            ui->Out->setCurrentIndex(1);
             ui->resultText->insertPlainText(line);
-            ui->resultText->moveCursor(QTextCursor::End);
+           // ui->resultText->moveCursor(QTextCursor::End);
         }
         else{
+            ui->Out->setCurrentIndex(0);
             ui->outText->insertPlainText(line);
             ui->outText->moveCursor(QTextCursor::End);
         }

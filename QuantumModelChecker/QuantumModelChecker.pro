@@ -24,6 +24,7 @@ SOURCES += \
     project.cpp \
     projectitem.cpp \
     projectmodel.cpp \
+    quantummain.cpp \
     textedit.cpp \
     treenode.cpp
 
@@ -48,8 +49,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    epmc-qmc.jar
+DISTFILES +=
 
 RESOURCES += \
     file.qrc \
