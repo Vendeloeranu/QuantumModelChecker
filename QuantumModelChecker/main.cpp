@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     QuantumMain w;
     QDir dir(qApp->applicationDirPath());
     if(!dir.cd("lib")){
-        QMessageBox::warning(&w, "Worning", "does not have \"\\lib\" directory!");
+        QMessageBox::warning(&w, "Worning", "does not have \".\\lib\" directory!");
         return -7;
     }
     QFileInfo info(dir.absoluteFilePath("epmc-qmc.jar"));
