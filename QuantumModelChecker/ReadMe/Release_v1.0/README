@@ -1,0 +1,4 @@
+
+Note: QuantumModelChecker(QMC) need JAVA environment. Please install JRE(or JDK) brfore run it.
+
+In this directory, it contains three versions of QuantumModelChecker(QMC). For Ubuntu and Windows, you do not need to install Qt environment and just click the executable file to run the program. But for Mac, you should install it following the instruction in "./MAC".
